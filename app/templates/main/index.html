@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}   
+<div id="landing">
+    <p class="meeting-time">Wednesdays from 3:00 - 4:30pm</p>
+    <h1>Computer Science Club</h1>
+    <p class="school">Waterloo Collegiate Institute</p>
+    <p class="tagline">A community for <b>anyone</b> interested in <br><span class="typing-animation"></span></p>
+    <a class="landing-button" href="https://classroom.google.com/c/MTY1NzAzMDQzNjJa?cjc=c2prjk3" target="_blank" rel="noopener noreferrer">Join our Classroom →</a>
+    <div class="landing-gradient"></div>
+    <div class="landing-image"></div>
+</div>
+
+<div id="about">
+    <div class="about-text">
+        <h2>We will be covering new and exciting content!</h2>
+        <p>You will learn something new about CS whether you’re a beginner or super advanced.</p>
+        <p>We'll continue to teach the basics of coding and prepare for the CCC with algorithms and data structures.</p>
+    </div>
+    <div class="app-window">
+        <div class="window-buttons">
+            <div class="red"></div>
+            <div class="yellow"></div>
+            <div class="green"></div>
+        </div>
+        <h2>2022-23</h2>
+        <ul class="checkbox">
+            <li>app development</li>
+            <li>workshops on new tech</li>
+            <li>capture the flag competitions</li>
+            <li>field trips</li>
+            <li>internship opportunities</li>
+            <li>new languages</li>
+        </ul>
+        <ul class="green-check">
+            <li>Beginner: basics of coding</li>
+            <li>Advanced: CCC preparation</li>
+        </ul>
+    </div>
+</div>
+
+<div id="faq">
+    <h2>Frequently asked questions</h2>
+    <input id="faq1" type="checkbox">
+    <label for="faq1" class="faq-container">
+        <p class="faq-heading">
+            <span class="faq-arrow">></span>
+            What if I don’t know how to code?
+        </p>
+        <div class="faq-body">
+            <p class="faq-text">We will be teaching the basics of coding in the beginner class, so you don’t need any previous knowledge to attend.</p>
+        </div>
+    </label>
+    
+    <input id="faq2" type="checkbox">
+    <label for="faq2" class="faq-container">
+        <p class="faq-heading">
+            <span class="faq-arrow">></span>
+            What if I don’t know how to code?
+        </p>
+        <div class="faq-body">
+            <p class="faq-text">We will be teaching the basics of coding in the beginner class, so you don’t need any previous knowledge to attend.</p>
+        </div>
+    </label>
+</div>
+
+<div id="contact">
+    <h2>Any questions?</h2>
+    <p>Reach out to us through <button id="email">email</button></p>
+    <div class="contact-emails">
+        <p><a href="#">Scott</a><a href="#">Tristan</a><a href="#">Jeffery</a></p>
+        <p><a href="#">Claire</a><a href="#">Ching Lam</a></p>
+    </div>
+    <a class="classroom" href="https://classroom.google.com/c/MTY1NzAzMDQzNjJa?cjc=c2prjk3" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-users-rectangle"></i>
+        Classroom
+    </a>
+    <a class="instagram" href="https://www.instagram.com/wci_computer_science/" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-instagram"></i>
+        Instagram
+    </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+<script>
+    var typed = new Typed(".typing-animation", {
+        strings: ["programming", "problem-solving", "technology"],
+        typeSpeed: 70,
+        backSpeed: 40,
+        smartBackspace: false,
+        loop: true,
+    });
+</script>
+{% endblock %}
