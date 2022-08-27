@@ -1,0 +1,16 @@
+<h2>Attendance ADMIN</h2>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>Create a new attendance code (leave blank for random code - not done yet-):</p>
+    <p>{{ form.code() }}</p>
+    <p>The attendance code will be valid for 1 hour</p>
+    <p>{{ form.submit() }}</p>
+</form>
+<div>
+    {% for attendance in attendances %}
+        <p>{{ attendance.code }}</p>
+        {% for attendee in attendance.attendees %}
+            <p>{{ attendee.first_name }} {{ attendee.last_name }}</p>
+        {% endfor %}
+    {% endfor %}
+</div>

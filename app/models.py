@@ -19,3 +19,5 @@ def load_user(id):
 class Attendance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String, index=True, unique=True)
+    start_time = db.Column(db.DateTime, index=True)
+    end_time = db.Column(db.DateTime, index=True)
