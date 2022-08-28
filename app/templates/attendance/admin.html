@@ -7,10 +7,14 @@
     <p>{{ form.submit() }}</p>
 </form>
 <div>
-    {% for attendance in attendances %}
-        <p>{{ attendance.code }}</p>
-        {% for attendee in attendance.attendees %}
-            <p>{{ attendee.first_name }} {{ attendee.last_name }}</p>
+    {% if attendances %}
+        {% for attendance in attendances %}
+            <p>{{ attendance.code }} | {{ attendance.start_time }} -- {{ attendance.end_time }} |
+                <a href="{{ url_for('attendance.attendees', code=attendance.code) }}">Attendees</a> |
+                <a href="{{ url_for('attendance.display', code=attendance.code) }}">Display</a>
+            </p>
         {% endfor %}
-    {% endfor %}
+    {% else %}
+        <p>No attendances recorded.</p>
+    {% endif %}
 </div>
