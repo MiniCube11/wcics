@@ -59,7 +59,7 @@ body {
     font-weight: bold;
 }
 
-.user {
+.user, .user a {
     color: var(--nav-gray);
 }
 

@@ -18,7 +18,10 @@
                 <a href="{{ url_for('main.index') }}" class="nav-logo">>WCI_</a>
             </div>
         </div>
-        <p class="user">Logged in as {{ current_user.first_name }} {{ current_user.last_name }}</p>
+        <p class="user">
+            Logged in as {{ current_user.first_name }} {{ current_user.last_name }} - 
+            <a href="{{ url_for('auth.logout') }}">Log out</a>
+        </p>
     </nav>
     {% endif %}
     {% block content %}{% endblock %}
