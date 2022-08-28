@@ -10,11 +10,11 @@ bp = Blueprint('attendance', __name__)
 
 @bp.route('/here')
 def attendance_redirect():
-    return redirect(url_for('attendance.index'))
+    return redirect(url_for('attendance.attendance'))
 
 @bp.route('/attendance', methods=['GET', 'POST'])
 @login_required
-def index():
+def attendance():
     form = AttendanceForm()
     if form.validate_on_submit():
         code = form.code.data
@@ -26,18 +26,18 @@ def index():
         if attendance and attendance.start_time <= current_time <= attendance.end_time:
             attendance.attendees.append(current_user)
             db.session.commit()
-            return redirect(url_for('attendance.attendance_success'))
+            return redirect(url_for('attendance.success'))
         flash("The code you entered is invalid.")
-        return redirect(url_for('attendance.index'))
-    return render_template('attendance/index.html', form=form)
+        return redirect(url_for('attendance.attendance'))
+    return render_template('attendance/attendance.html', form=form)
 
 @bp.route('/attendance/success')
-def attendance_success():
+def success():
     return render_template('attendance/success.html')
 
 @bp.route('/attendance/admin', methods=['GET', 'POST'])
 @login_required
-def attendance_admin():
+def admin():
     form = CreateAttendanceForm()
     if form.validate_on_submit():
         start_time = datetime.datetime.utcnow()
@@ -47,7 +47,7 @@ def attendance_admin():
                                 end_time=end_time)
         db.session.add(attendance)
         db.session.commit()
-        return redirect(url_for('attendance.attendance_admin'))
+        return redirect(url_for('attendance.admin'))
     attendances = Attendance.query.all()
     return render_template('attendance/admin.html', form=form, attendances=attendances)
 
