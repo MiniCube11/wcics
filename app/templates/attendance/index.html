@@ -1,10 +1,28 @@
-<h2>Attendance</h2>
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>Enter the attendance code:</p>
-    <p>{{ form.code() }}</p>
-    {% for error in form.code.errors %}
-        {{ error }}
-    {% endfor %}
-    <p>{{ form.submit() }}</p>
-</form>
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/attendance.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <h2>Attendance</h2>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        {{ form.code(class_="code-input", placeholder="Attendance code", autocomplete="off") }}
+        <div class="errors">
+            {% for error in form.code.errors %}
+                <p class="form-error">{{ error }}</p>
+            {% endfor %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="form-error">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <p>{{ form.submit(class_="form-submit") }}</p>
+    </form>
+</div>
+{% endblock %}

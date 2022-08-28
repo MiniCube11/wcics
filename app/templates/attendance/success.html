@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/attendance.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <h2>The attendance code you submitted is valid.</h2>
+</div>
+{% endblock %}

@@ -4,7 +4,33 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock %}
 
-{% block content %}   
+{% block content %}
+<nav class="nav-transparent">
+    <div class="nav-links">
+        <div class="nav-top">
+            <a href="" class="nav-logo">>WCI_</a>
+            <button class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        <div class="section-links">
+            <a href="#about">About</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </div>
+    <div class="nav-socials">
+        <div class="social-icons">
+            <a class="classroom" href="https://classroom.google.com/c/MTY1NzAzMDQzNjJa?cjc=c2prjk3" target="_blank" rel="noopener noreferrer">
+                <i class="fa-solid fa-users-rectangle"></i>
+            </a>
+            <a class="instagram" href="https://www.instagram.com/wci_computer_science/" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+        </div>
+        <a class="nav-join-button" href="https://classroom.google.com/c/MTY1NzAzMDQzNjJa?cjc=c2prjk3" target="_blank" rel="noopener noreferrer">Join</a>
+    </div>
+</nav>
+
 <div id="landing">
     <p class="meeting-time">Wednesdays from 3:00 - 4:30pm</p>
     <h1>Computer Science Club</h1>
@@ -84,6 +110,8 @@
         Instagram
     </a>
 </div>
+
+{% include "includes/footer.html" %}
 {% endblock %}
 
 {% block scripts %}

@@ -59,6 +59,10 @@ body {
     font-weight: bold;
 }
 
+.user {
+    color: var(--nav-gray);
+}
+
 .hamburger {
     width: 40px;
     height: 40px;
@@ -146,6 +150,24 @@ body {
 .footer-rights > p {
     font-family: "Source Code Pro", monospace;
     color: var(--nav-gray);
+}
+
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: 0 var(--side-margin);
+}
+
+.main h2 {
+    font-family: "Ubuntu", sans-serif;
+}
+
+.main p {
+    font-family: "Source Code Pro", monospace;
 }
 
 /* Mobile and tablet */

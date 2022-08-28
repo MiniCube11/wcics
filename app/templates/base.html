@@ -11,54 +11,16 @@
 </head>
 
 <body>
+    {% if not home %}
     <nav class="nav-transparent">
         <div class="nav-links">
             <div class="nav-top">
-                <a href="" class="nav-logo">>WCI_</a>
-                <button class="hamburger">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-            <div class="section-links">
-                <a href="#about">About</a>
-                <a href="#faq">FAQ</a>
+                <a href="{{ url_for('main.index') }}" class="nav-logo">>WCI_</a>
             </div>
         </div>
-        <div class="nav-socials">
-            <div class="social-icons">
-                <a class="classroom" href="https://classroom.google.com/c/MTY1NzAzMDQzNjJa?cjc=c2prjk3" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-solid fa-users-rectangle"></i>
-                </a>
-                <a class="instagram" href="https://www.instagram.com/wci_computer_science/" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-            </div>
-            <a class="nav-join-button" href="https://classroom.google.com/c/MTY1NzAzMDQzNjJa?cjc=c2prjk3" target="_blank" rel="noopener noreferrer">Join</a>
-        </div>
+        <p class="user">Logged in as {{ current_user.first_name }} {{ current_user.last_name }}</p>
     </nav>
+    {% endif %}
     {% block content %}{% endblock %}
-    <div id="footer">
-        <p>>WCI_</p>
-        <div class="footer-links">
-            <div class="footer-left">
-                <a class="classroom" href="https://classroom.google.com/c/MTY1NzAzMDQzNjJa?cjc=c2prjk3" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-solid fa-users-rectangle"></i>
-                    Classroom
-                </a>
-                <a class="instagram" href="https://www.instagram.com/wci_computer_science/" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-brands fa-instagram"></i>
-                    Instagram
-                </a>
-            </div>
-            <div class="footer-right">
-                <a href="">Home</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-        <div class="footer-rights">
-            <p>Copyright © 2022 WCI Computer Science</p>
-        </div>
-    </div>
     {% block scripts %}{% endblock %}
 </body>

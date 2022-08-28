@@ -1,4 +1,14 @@
-<h2>Attendance</h2>
-<p>Go to <a href="{{ url_for('attendance.attendance_redirect') }}">{{ url_for('attendance.attendance_redirect', _external=True) }}</a></p>
-<p>{{ attendance.code }}</p>
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url_for('attendance.index', code=attendance.code) }}">
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/attendance.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <h2>Attendance</h2>
+    <p>Go to <a href="{{ url_for('attendance.attendance_redirect') }}">{{ url_for('attendance.attendance_redirect', _external=True) }}</a></p>
+    <p>{{ attendance.code }}</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url_for('attendance.index', code=attendance.code) }}">
+</div>
+{% endblock %}
