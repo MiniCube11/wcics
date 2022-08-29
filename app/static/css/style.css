@@ -162,12 +162,23 @@ body {
     margin: 0 var(--side-margin);
 }
 
-.main h2 {
+.main-left {
+    margin-top: 100px;
+    margin-left: var(--side-margin);
+    color: white;
+}
+
+.main h2, .main-left h2, .main-left h3 {
     font-family: "Ubuntu", sans-serif;
 }
 
-.main p {
+.main p, .main-left p {
     font-family: "Source Code Pro", monospace;
+}
+
+.main-left a {
+    color: white;
+    text-decoration: none;
 }
 
 /* Mobile and tablet */

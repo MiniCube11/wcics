@@ -1,7 +1,3 @@
-form {
-    margin: 0 var(--side-margin);
-}
-
 .code-input {
     font-family: "Source Code Pro", monospace;
     font-size: 20px;
@@ -70,4 +66,52 @@ form {
     color: var(--accent-color);
     text-decoration: none;
     font-weight: 600;
+}
+
+.attendance-row {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.attendance-row > .row-heading {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.attendance-row > .display {
+    display: inline-block;
+    width: 70px;
+}
+
+.attendance-row > .code {
+    display: inline-block;
+    margin-left: 20px;
+    width: 160px;
+    font-weight: 600;
+}
+
+.attendance-row > .expiry {
+    display: inline-block;
+    margin-left: 20px;
+    width: 200px;
+}
+
+.attendance-row > .attendees {
+    display: inline-block;
+    margin-left: 20px;
+    width: 100px;
+}
+
+.attendance-row > .valid {
+    display: inline-block;
+    width: 100px;
+    margin-left: 20px;
+    color: rgb(60, 231, 60);
+}
+
+.attendance-row > .invalid {
+    display: inline-block;
+    width: 100px;
+    margin-left: 20px;
 }

@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from app import app, db
 from app.forms import AttendanceForm, CreateAttendanceForm
 from app.models import Attendance
+from app.utils import format_time, is_valid_attendance
 import datetime
 
 bp = Blueprint('attendance', __name__)
@@ -28,8 +29,7 @@ def attendance():
         code = request.args.get('code')
     if code:
         attendance = Attendance.query.filter_by(code=code).first()
-        current_time = datetime.datetime.utcnow()
-        if attendance and attendance.start_time <= current_time <= attendance.end_time:
+        if attendance and is_valid_attendance(attendance):
             attendance.attendees.append(current_user)
             db.session.commit()
             return redirect(url_for('attendance.success'))
@@ -56,8 +56,9 @@ def admin():
         db.session.add(attendance)
         db.session.commit()
         return redirect(url_for('attendance.admin'))
-    attendances = Attendance.query.all()
-    return render_template('attendance/admin.html', form=form, attendances=attendances)
+    attendances = Attendance.query.order_by(Attendance.end_time.desc()).all()
+    print(datetime.datetime.now().strftime("%H:%M:%S"))
+    return render_template('attendance/admin.html', form=form, attendances=attendances, len=len, format_time=format_time, is_valid_attendance=is_valid_attendance)
 
 @bp.route('/attendance/<code>/attendees')
 @login_required

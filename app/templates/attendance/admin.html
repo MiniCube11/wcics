@@ -1,20 +1,49 @@
-<h2>Attendance ADMIN</h2>
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>Create a new attendance code (leave blank for random code - not done yet-):</p>
-    <p>{{ form.code() }}</p>
-    <p>The attendance code will be valid for 1 hour</p>
-    <p>{{ form.submit() }}</p>
-</form>
-<div>
-    {% if attendances %}
-        {% for attendance in attendances %}
-            <p>{{ attendance.code }} | {{ attendance.start_time }} -- {{ attendance.end_time }} |
-                <a href="{{ url_for('attendance.attendees', code=attendance.code) }}">Attendees</a> |
-                <a href="{{ url_for('attendance.display', code=attendance.code) }}">Display</a>
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/attendance.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="main-left">
+    <h2>Attendance ADMIN</h2>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>Create a new attendance code (leave blank for random code - not done yet-):</p>
+        <p>{{ form.code() }}</p>
+        <p>The attendance code will be valid for 1 hour</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <div>
+        <h3>Attendance codes</h3>
+        {% if attendances %}
+            <p class="attendance-row">
+                <span class="row-heading display">Display</span>
+                <span class="row-heading code">Attendance Code</span>
+                <span class="row-heading expiry">Expiry Date</span>
+                <span class="row-heading attendees">Attendees</span>
+                <span class="row-heading invalid">Status</span>
             </p>
-        {% endfor %}
-    {% else %}
-        <p>No attendances recorded.</p>
-    {% endif %}
+            {% for attendance in attendances %}
+                <p class="attendance-row">
+                    <a class="display" href="{{ url_for('attendance.display', code=attendance.code) }}">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                    <span class="code">{{ attendance.code }}</span>
+                    <span class="expiry">{{ format_time(attendance.end_time) }}</span>
+                    <a class="attendees" href="{{ url_for('attendance.attendees', code=attendance.code) }}">
+                        <i class="fa-solid fa-user"></i> {{ len(attendance.attendees.all()) }}
+                    </a>
+                    {% if is_valid_attendance(attendance) %}
+                    <span class="valid">Valid</span>
+                    {% else %}
+                    <span class="invalid">Expired</span>
+                    {% endif %}
+                </p>
+            {% endfor %}
+        {% else %}
+            <p>No attendances recorded.</p>
+        {% endif %}
+    </div>
 </div>
+{% endblock %}
