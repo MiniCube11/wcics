@@ -11,6 +11,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(64), index=True)
     email = db.Column(db.String(120), index=True, unique=True)
     attendance = db.relationship('Attendance', secondary=user_attendance, backref=db.backref('attendees', lazy='dynamic'))
+    is_admin = db.Column(db.Boolean, index=True, default=False)
 
 @login.user_loader
 def load_user(id):
