@@ -7,7 +7,7 @@
 {% block content %}
 <div class="main-left">
     <h2>Create a new attendance code</h2>
-    <p>Valid for 1 hour (blank for random code)</p>
+    <p style="margin-top: 10px">Valid for 1 hour (blank for random code)</p>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -33,7 +33,8 @@
             <p class="attendance-row">
                 <span class="row-heading display">Display</span>
                 <span class="row-heading code">Attendance Code</span>
-                <span class="row-heading expiry">Expiry Date</span>
+                <span class="row-heading date">Start Date</span>
+                <span class="row-heading date">End Date</span>
                 <span class="row-heading attendees">Attendees</span>
                 <span class="row-heading invalid">Status</span>
             </p>
@@ -43,7 +44,8 @@
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                     <span class="code">{{ attendance.code }}</span>
-                    <span class="expiry">{{ format_time(attendance.end_time) }}</span>
+                    <span class="date">{{ format_time(attendance.start_time) }}</span>
+                    <span class="date">{{ format_time(attendance.end_time) }}</span>
                     <a class="attendees" href="{{ url_for('attendance.attendees', code=attendance.code) }}">
                         <i class="fa-solid fa-user"></i> {{ len(attendance.attendees.all()) }}
                     </a>

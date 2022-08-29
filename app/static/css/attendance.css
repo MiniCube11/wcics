@@ -103,7 +103,7 @@
     font-weight: 600;
 }
 
-.attendance-row > .expiry {
+.attendance-row > .date {
     display: inline-block;
     margin-left: 20px;
     width: 200px;
