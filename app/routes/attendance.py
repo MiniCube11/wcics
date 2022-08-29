@@ -53,11 +53,12 @@ def admin():
         attendance = Attendance(code=form.code.data,
                                 start_time=start_time,
                                 end_time=end_time)
+        if form.code.data == "":
+            attendance.set_random_code(length=6)
         db.session.add(attendance)
         db.session.commit()
         return redirect(url_for('attendance.admin'))
     attendances = Attendance.query.order_by(Attendance.end_time.desc()).all()
-    print(datetime.datetime.now().strftime("%H:%M:%S"))
     return render_template('attendance/admin.html', form=form, attendances=attendances, len=len, format_time=format_time, is_valid_attendance=is_valid_attendance)
 
 @bp.route('/attendance/<code>/attendees')

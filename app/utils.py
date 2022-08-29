@@ -13,7 +13,9 @@ def format_time(date):
     else:
         formatted = f"{months[date.month-1]} {date.day}"
     if date.hour == 0:
-        formatted += f"12:{date.minute}am"
+        formatted += f" 12:{date.minute}am"
+    elif date.hour == 12:
+        formatted += f" 12:{date.minute}pm"
     elif date.hour > 12:
         formatted += f" {date.hour-12}:{date.minute}pm"
     else:

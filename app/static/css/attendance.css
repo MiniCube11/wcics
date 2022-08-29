@@ -37,6 +37,11 @@
     margin-top: 20px;
 }
 
+.admin-submit {
+    width: 100px;
+    margin-left: 10px;
+}
+
 .display-attendance {
     display: flex;
     width: 100%;
@@ -66,6 +71,10 @@
     color: var(--accent-color);
     text-decoration: none;
     font-weight: 600;
+}
+
+.attendance-container {
+    margin-top: 50px;
 }
 
 .attendance-row {
