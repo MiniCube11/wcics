@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, url_for, session, flash
+from flask import Blueprint, redirect, render_template, url_for, session, flash, request
 from werkzeug.urls import url_parse
 from app import db
 from app.oauth import get_auth_url, get_access_token, get_user_info
@@ -12,6 +12,7 @@ bp = Blueprint('auth', __name__)
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
+    session['next'] = request.args.get('next')
     return render_template('auth/login.html')
 
 @bp.route('/auth/google')
@@ -51,4 +52,4 @@ def callback():
 @bp.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('auth.login'))
