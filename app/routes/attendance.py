@@ -55,8 +55,11 @@ def admin():
                                 end_time=end_time)
         if form.code.data == "":
             attendance.set_random_code(length=6)
-        db.session.add(attendance)
-        db.session.commit()
+        if form.code.data == "" or Attendance.query.filter_by(code=form.code.data).first() is None:
+            db.session.add(attendance)
+            db.session.commit()
+        else:
+            flash("The attendance code has already been used.")
         return redirect(url_for('attendance.admin'))
     attendances = Attendance.query.order_by(Attendance.end_time.desc()).all()
     return render_template('attendance/admin.html', form=form, attendances=attendances, len=len, format_time=format_time, is_valid_attendance=is_valid_attendance)

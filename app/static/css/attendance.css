@@ -18,10 +18,13 @@
 }
 
 .form-error {
-    text-align: center;
     color: #fd8585;
     margin-top: 10px;
     margin-left: 2px;
+}
+
+.form-error-centered {
+    text-align: center;
 }
 
 .form-submit {

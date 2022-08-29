@@ -12,12 +12,12 @@
         {{ form.code(class_="code-input", placeholder="Attendance code", autocomplete="off") }}
         <div class="errors">
             {% for error in form.code.errors %}
-                <p class="form-error">{{ error }}</p>
+                <p class="form-error-centered">{{ error }}</p>
             {% endfor %}
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <p class="form-error">{{ message }}</p>
+                        <p class="form-error-centered">{{ message }}</p>
                     {% endfor %}
                 {% endif %}
             {% endwith %}

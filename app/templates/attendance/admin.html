@@ -10,9 +10,12 @@
     <p>Valid for 1 hour (blank for random code)</p>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        {{ form.code(class_="code-input", placeholder="Attendance code", autocomplete="off") }}
-        {{ form.submit(class_="form-submit admin-submit") }}
-        {% for error in form.code.errors %}
+        <p>
+            {{ form.code(class_="code-input", placeholder="Attendance code", autocomplete="off") }}
+            {{ form.submit(class_="form-submit admin-submit") }}
+        </p>
+        <div class="errors">
+            {% for error in form.code.errors %}
                 <p class="form-error">{{ error }}</p>
             {% endfor %}
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -22,6 +25,7 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
+        </div>
     </form>
     <div class="attendance-container">
         <h2>Attendance codes</h2>
