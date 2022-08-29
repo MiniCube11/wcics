@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, abort
+from flask import Blueprint, render_template, redirect, url_for, request, flash, abort, session
 from flask_login import current_user, login_required
 from app import app, db
 from app.forms import AttendanceForm, CreateAttendanceForm
@@ -30,8 +30,10 @@ def attendance():
     if code:
         attendance = Attendance.query.filter_by(code=code).first()
         if attendance and is_valid_attendance(attendance):
-            attendance.attendees.append(current_user)
-            db.session.commit()
+            if not attendance in current_user.attendance:
+                attendance.attendees.append(current_user)
+                db.session.commit()
+            session['attendance_success'] = True
             return redirect(url_for('attendance.success'))
         flash("The code you entered is invalid.")
         return redirect(url_for('attendance.attendance'))
@@ -39,6 +41,9 @@ def attendance():
 
 @bp.route('/attendance/success')
 def success():
+    if not session.get('attendance_success'):
+        return redirect(url_for('attendance.attendance'))
+    session.pop('attendance_success', None)
     return render_template('attendance/success.html')
 
 @bp.route('/attendance/admin', methods=['GET', 'POST'])
