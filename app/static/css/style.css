@@ -63,6 +63,10 @@ body {
     color: var(--nav-gray);
 }
 
+.section-links > a:hover {
+    color: #c6cacd;
+}
+
 .hamburger {
     width: 40px;
     height: 40px;
@@ -112,6 +116,20 @@ body {
     font-family: "Ubuntu", sans-serif;
     font-weight: bold;
     text-decoration: none;
+    transition: 
+        color 0.5s ease, 
+        background-color 0.5s ease, 
+        box-shadow 0.5s ease;
+}
+
+.nav-join-button:hover {
+    color: white;
+    background-color: #479ced;
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+}
+
+.contact-emails a:hover {
+    color: #c0c7ce;
 }
 
 #footer {

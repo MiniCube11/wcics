@@ -69,11 +69,12 @@
     width: 100%;
     text-decoration: none;
     text-align: center;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, box-shadow 0.3s ease;
 }
 
 .landing-button:hover {
-    background-color: #2f7ec8;
+    background-color: #479ced;
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
 
 #about {
