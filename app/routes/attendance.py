@@ -1,4 +1,3 @@
-from threading import local
 from flask import Blueprint, render_template, redirect, url_for, request, flash, abort, session
 from flask_login import current_user, login_required
 from app import app, db
