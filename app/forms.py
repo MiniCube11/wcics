@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateField
+from wtforms import StringField, SubmitField, DateField, TimeField
 from wtforms.validators import DataRequired
 
 class AttendanceForm(FlaskForm):
@@ -7,7 +7,8 @@ class AttendanceForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class CreateAttendanceForm(FlaskForm):
-    code = StringField('Code')
-    # start_time = DateField('Start Time', validators=[DataRequired()])
-    # end_time = DateField('End Time', validators=[DataRequired()], format='%d.%m.%Y %H.%M')
+    code = StringField('Code', validators=[DataRequired()])
+    date = DateField('Date', validators=[DataRequired()])
+    start_time = TimeField('Start Time', validators=[DataRequired()])
+    end_time = TimeField('End Time', validators=[DataRequired()])
     submit = SubmitField('Create')

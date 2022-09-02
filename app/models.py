@@ -24,16 +24,16 @@ class Attendance(db.Model):
     start_time = db.Column(db.DateTime, index=True)
     end_time = db.Column(db.DateTime, index=True)
 
-    def generate_random_code(self, length):
+    def generate_random_code(length):
         characters = "abcdefghijklmnopqrstuvwxyz1234567890"
         code = ""
         for _ in range(length):
             code += random.choice(characters)
         return code
 
-    def set_random_code(self, length):
-        code = self.generate_random_code(length)
+    def random_code(length):
+        code = Attendance.generate_random_code(length)
         while Attendance.query.filter_by(code=code).first():
-            code = self.generate_random_code(length)
-        self.code = code
+            code = Attendance.generate_random_code(length)
+        return code
             

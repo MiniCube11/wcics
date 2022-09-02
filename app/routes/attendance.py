@@ -1,9 +1,10 @@
+from threading import local
 from flask import Blueprint, render_template, redirect, url_for, request, flash, abort, session
 from flask_login import current_user, login_required
 from app import app, db
 from app.forms import AttendanceForm, CreateAttendanceForm
 from app.models import Attendance
-from app.utils import format_time, is_valid_attendance
+from app.utils import format_time, is_valid_attendance, local_to_utc
 import datetime
 
 bp = Blueprint('attendance', __name__)
@@ -52,14 +53,19 @@ def admin():
     if not current_user.is_admin:
         abort(403)
     form = CreateAttendanceForm()
-    if form.validate_on_submit():
-        start_time = datetime.datetime.utcnow()
-        end_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+    if request.method == 'GET':
+        form.code.data = Attendance.random_code(length=6)
+        form.date.data = datetime.datetime.now()
+        form.start_time.data = datetime.datetime.now()
+        form.end_time.data = datetime.datetime.now() + datetime.timedelta(hours=2)
+    elif form.validate_on_submit():
+        start_time = local_to_utc(datetime.datetime.combine(form.date.data, form.start_time.data))
+        end_time = local_to_utc(datetime.datetime.combine(form.date.data, form.end_time.data))
+        if end_time < start_time:
+            end_time += datetime.timedelta(days=1)
         attendance = Attendance(code=form.code.data,
                                 start_time=start_time,
                                 end_time=end_time)
-        if form.code.data == "":
-            attendance.set_random_code(length=6)
         if form.code.data == "" or Attendance.query.filter_by(code=form.code.data).first() is None:
             db.session.add(attendance)
             db.session.commit()

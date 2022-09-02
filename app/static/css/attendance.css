@@ -17,6 +17,30 @@
     border-bottom: 2px solid var(--accent-color);
 }
 
+input[type="date"] {
+    font-family: "Source Code Pro", monospace;
+    color: white;
+    background-color: #5d4e76;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    width: 250px;
+}
+
+input[type="time"] {
+    font-family: "Source Code Pro", monospace;
+    color: white;
+    background-color: #5d4e76;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    width: 100px;
+}
+
 .form-error {
     color: #fd8585;
     margin-top: 10px;
@@ -41,8 +65,7 @@
 }
 
 .admin-submit {
-    width: 100px;
-    margin-left: 10px;
+    width: 290px;
 }
 
 .display-attendance {

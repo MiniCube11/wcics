@@ -7,17 +7,28 @@
 {% block content %}
 <div class="main-left">
     <h2>Create a new attendance code</h2>
-    <p style="margin-top: 10px">Valid for 1 hour (blank for random code)</p>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.code(class_="code-input", placeholder="Attendance code", autocomplete="off") }}
+            {{ form.code(class_="code-input", placeholder="Attendance code", autocomplete="off", spellcheck="false") }}
+        </p>
+        <p>
+            {{ form.date() }}
+        </p>
+        <p>
+            {{ form.start_time() }}
+            {{ form.end_time() }}
+        </p>
+        <p>
             {{ form.submit(class_="form-submit admin-submit") }}
         </p>
         <div class="errors">
-            {% for error in form.code.errors %}
-                <p class="form-error">{{ error }}</p>
-            {% endfor %}
+            {% if form.code.errors %}
+                {% for error in form.code.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+                <a href="">Clear</a>
+            {% endif %}
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}

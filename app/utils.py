@@ -4,6 +4,10 @@ def utc_to_local(utc_datetime):
     time_dif = datetime.datetime.now() - datetime.datetime.utcnow()
     return utc_datetime + time_dif
 
+def local_to_utc(local_datetime):
+    time_dif = datetime.datetime.now() - datetime.datetime.utcnow()
+    return local_datetime - time_dif
+
 def format_time(date):
     date = utc_to_local(date)
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
