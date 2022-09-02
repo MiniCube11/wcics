@@ -11,20 +11,25 @@ def local_to_utc(local_datetime):
 def format_time(date):
     date = utc_to_local(date)
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    current_date = datetime.datetime.utcnow()
+    current_date = datetime.datetime.now()
+    
+    day = f"{months[date.month-1]} {date.day}"
     if date.year == current_date.year and date.month == current_date.month and date.day == current_date.day:
-        formatted = "Today"
-    else:
-        formatted = f"{months[date.month-1]} {date.day}"
-    if date.hour == 0:
-        formatted += f" 12:{date.minute}am"
-    elif date.hour == 12:
-        formatted += f" 12:{date.minute}pm"
-    elif date.hour > 12:
-        formatted += f" {date.hour-12}:{date.minute}pm"
-    else:
-        formatted += f" {date.hour}:{date.minute}am"
-    return formatted
+        day = "Today"
+
+    hour = date.hour
+    suffix = "am"
+    if hour >= 12:
+        hour -= 12
+        suffix = "pm"
+    if hour == 0:
+        hour = 12
+    
+    minute = str(date.minute)
+    if len(minute) == 1:
+        minute = "0" + minute
+    
+    return f"{day} {hour}:{minute}{suffix}"
 
 def is_valid_attendance(attendance):
     current_time = datetime.datetime.utcnow()
