@@ -9,13 +9,6 @@ import datetime
 
 bp = Blueprint('attendance', __name__)
 
-@bp.before_app_request
-def before_request():
-    if current_user.is_authenticated and not current_user.is_admin:
-        if current_user.email in app.config['ADMIN_USERS']:
-            current_user.is_admin = True
-            db.session.commit()
-
 @bp.route('/here')
 def attendance_redirect():
     return redirect(url_for('attendance.attendance'))
