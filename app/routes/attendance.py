@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, abort, session
 from flask_login import current_user, login_required
-from app import app, db
-from app.forms import AttendanceForm, CreateAttendanceForm
+from app import db
+from app.forms import AttendanceForm
 from app.models import Attendance
-from app.utils import format_time, is_valid_attendance, local_to_utc
-import datetime
+from app.utils import is_valid_attendance
+import json
 
 bp = Blueprint('attendance', __name__)
 
@@ -44,28 +44,31 @@ def success():
 def admin():
     if not current_user.is_admin:
         abort(403)
-    form = CreateAttendanceForm()
-    if request.method == 'GET':
-        form.code.data = Attendance.random_code(length=6)
-        form.date.data = datetime.datetime.now()
-        form.start_time.data = datetime.datetime.now()
-        form.end_time.data = datetime.datetime.now() + datetime.timedelta(hours=2)
-    elif form.validate_on_submit():
-        start_time = local_to_utc(datetime.datetime.combine(form.date.data, form.start_time.data))
-        end_time = local_to_utc(datetime.datetime.combine(form.date.data, form.end_time.data))
-        if end_time < start_time:
-            end_time += datetime.timedelta(days=1)
-        attendance = Attendance(code=form.code.data,
-                                start_time=start_time,
-                                end_time=end_time)
-        if form.code.data == "" or Attendance.query.filter_by(code=form.code.data).first() is None:
-            db.session.add(attendance)
-            db.session.commit()
-        else:
-            flash("The attendance code has already been used.")
-        return redirect(url_for('attendance.admin'))
     attendances = Attendance.query.order_by(Attendance.end_time.desc()).all()
-    return render_template('attendance/admin.html', form=form, attendances=attendances, len=len, format_time=format_time, is_valid_attendance=is_valid_attendance)
+    return render_template('attendance/admin.html', attendances=attendances, len=len, is_valid_attendance=is_valid_attendance)
+
+@bp.route('/attendance/create', methods=['POST'])
+@login_required
+def create_attendance():
+    if not current_user.is_admin:
+        abort(403)
+    res = request.get_data("data")
+    data = json.loads(res)
+    code = data.get("code")
+    start_time = data.get("start_time")
+    end_time = data.get("end_time")
+    
+    if not (start_time and end_time):
+        return "Missing or empty fields."
+    if not code:
+        code = Attendance.random_code(length=6)
+
+    attendance = Attendance(code=code, start_time=start_time, end_time=end_time)
+    if Attendance.query.filter_by(code=code).first() is None:
+        db.session.add(attendance)
+        db.session.commit()
+        return "Attendance code created successfully."
+    return "Attendance code already exists."
 
 @bp.route('/attendance/<code>/attendees')
 @login_required

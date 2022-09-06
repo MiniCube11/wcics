@@ -7,28 +7,22 @@
 {% block content %}
 <div class="main-left">
     <h2>Create a new attendance code</h2>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
+    <p style="margin-top: 10px;">Leave blank for random code</p>
+    <form id="form">
         <p>
-            {{ form.code(class_="code-input", placeholder="Attendance code", autocomplete="off", spellcheck="false") }}
+            <input id="code" class="code-input" placeholder="Attendance code" autocomplete="off" spellcheck="false">
         </p>
         <p>
-            {{ form.date() }}
+            <input id="date" type="date">
         </p>
         <p>
-            {{ form.start_time() }}
-            {{ form.end_time() }}
+            <input id="start_time" type="time">
+            <input id="end_time" type="time">
         </p>
         <p>
-            {{ form.submit(class_="form-submit admin-submit") }}
+            <button id="submit" class="form-submit admin-submit">Create</button>
         </p>
-        <div class="errors">
-            {% if form.code.errors %}
-                {% for error in form.code.errors %}
-                    <p class="form-error">{{ error }}</p>
-                {% endfor %}
-                <a href="">Clear</a>
-            {% endif %}
+        <div id="errors" class="errors">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
@@ -55,8 +49,8 @@
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                     <span class="code">{{ attendance.code }}</span>
-                    <span class="date">{{ format_time(attendance.start_time) }}</span>
-                    <span class="date">{{ format_time(attendance.end_time) }}</span>
+                    <span class="date">{{ moment(attendance.start_time).format('MMM D h:mma') }}</span>
+                    <span class="date">{{ moment(attendance.end_time).format('MMM D h:mma') }}</span>
                     <a class="attendees" href="{{ url_for('attendance.attendees', code=attendance.code) }}">
                         <i class="fa-solid fa-user"></i> {{ len(attendance.attendees.all()) }}
                     </a>
@@ -72,4 +66,66 @@
         {% endif %}
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    const addError = (message) => {
+        $("#errors").append("<p class='form-error'>" + message + "</p>");
+    }
+
+    const utcDate = (date, time) => {
+        let resDate = new Date(date + ' ' + time);
+        return resDate.toUTCString();
+    }
+
+    const createAttendanceCode = () => {
+        let date = $("#date").val();
+        let start_time = utcDate(date, $("#start_time").val());
+        let end_time = utcDate(date, $("#end_time").val());
+
+        if (start_time === "Invalid Date" || end_time === "Invalid Date") {
+            addError("Missing or empty fields");
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "/attendance/create",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+                code: $("#code").val(),
+                start_time: start_time,
+                end_time: end_time,
+            }),
+            success: (message) => {
+                console.log(message)
+                if (message === "Attendance code created successfully.") {
+                    location.reload(true);
+                } else {
+                    addError(message);
+                }
+            },
+        })
+    }
+
+    const pad = (num) => {
+        if (num >= 10) return num;
+        return '0' + num;
+    }
+
+    const fillDates = () => {
+        let today = new Date();
+        let currentDate = today.getFullYear() + '-' + pad(today.getMonth()+1) + '-' + pad(today.getDate());
+        let startTime = pad(today.getHours()) + ':' + pad(today.getMinutes());
+        let endTime = pad((today.getHours() + 2) % 24) + ':' + pad(today.getMinutes());
+        document.getElementById("date").value = currentDate;
+        document.getElementById("start_time").value = startTime;
+        document.getElementById("end_time").value = endTime;       
+    }
+
+    fillDates();
+    $("#submit").click(createAttendanceCode);
+    $("#form").submit((e) => e.preventDefault());
+</script>
 {% endblock %}
