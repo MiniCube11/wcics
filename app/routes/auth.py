@@ -30,9 +30,13 @@ def callback():
     if access_token == 'error':
         flash("Invalid credentials. Please try again.", "error")
         return redirect(url_for('auth.login'))
-
+    
     user_info = get_user_info(access_token)
     user = User.query.filter_by(email=user_info['email']).first()
+    if user_info['email'].split('@')[1] != "wrdsb.ca":
+        flash("Please login with your school account.")
+        return redirect(url_for('auth.login'))
+
     if user:
         login_user(user, remember=True)
         next_page = session.get('next')
