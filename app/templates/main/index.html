@@ -32,7 +32,7 @@
 </nav>
 
 <div id="landing">
-    <p class="meeting-time">Wednesdays from 3:00 - 4:30pm</p>
+    <p class="meeting-time">Wednesdays from 2:30 - 4:00pm · Rm 218</p>
     <h1>Computer Science Club</h1>
     <p class="school">Waterloo Collegiate Institute</p>
     <p class="tagline">A community for <b>anyone</b> interested in <br><span class="typing-animation"></span></p>
@@ -71,27 +71,18 @@
 
 <div id="faq">
     <h2>Frequently asked questions</h2>
-    <input id="faq1" type="checkbox">
-    <label for="faq1" class="faq-container">
-        <p class="faq-heading">
-            <span class="faq-arrow">></span>
-            What if I don’t know how to code?
-        </p>
-        <div class="faq-body">
-            <p class="faq-text">We will be teaching the basics of coding in the beginner class, so you don’t need any previous knowledge to attend.</p>
-        </div>
-    </label>
-    
-    <input id="faq2" type="checkbox">
-    <label for="faq2" class="faq-container">
-        <p class="faq-heading">
-            <span class="faq-arrow">></span>
-            What if I don’t know how to code?
-        </p>
-        <div class="faq-body">
-            <p class="faq-text">We will be teaching the basics of coding in the beginner class, so you don’t need any previous knowledge to attend.</p>
-        </div>
-    </label>
+    {% for question in faq %}
+        <input id="faq{{ loop.index }}" type="checkbox">
+        <label for="faq{{ loop.index }}" class="faq-container">
+            <p class="faq-heading">
+                <span class="faq-arrow">></span>
+                {{ question.question }}
+            </p>
+            <div class="faq-body">
+                <p class="faq-text">{{ question.answer }}</p>
+            </div>
+        </label>
+    {% endfor %}
 </div>
 
 <div id="contact">
