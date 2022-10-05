@@ -12,7 +12,7 @@
     <div class="display-attendance">
         <p class="display-code">{{ attendance.code }}</p>
         <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ url_for('attendance.attendance', code=attendance.code) }}">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ url_for('attendance.attendance', code=attendance.code, _external=True) }}">
         </div>
     </div>
 </div>
