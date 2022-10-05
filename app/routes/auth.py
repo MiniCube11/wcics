@@ -37,21 +37,19 @@ def callback():
         flash("Please login with your school account.")
         return redirect(url_for('auth.login'))
 
-    if user:
-        login_user(user, remember=True)
-        next_page = session.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('main.index')
-        session.pop('next', None)
-        return redirect(next_page)
+    if not user:
+        user = User(first_name=user_info['given_name'], 
+                    last_name=user_info['family_name'], 
+                    email=user_info['email'])
+        db.session.add(user)
+        db.session.commit()
 
-    user = User(first_name=user_info['given_name'], 
-                last_name=user_info['family_name'], 
-                email=user_info['email'])
-    db.session.add(user)
-    db.session.commit()
-    login_user(user)
-    return redirect(url_for('main.index'))
+    login_user(user, remember=True)
+    next_page = session.get('next')
+    if not next_page or url_parse(next_page).netloc != '':
+        next_page = url_for('main.index')
+    session.pop('next', None)
+    return redirect(next_page)
 
 @bp.route('/logout')
 def logout():
