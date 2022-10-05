@@ -21,7 +21,10 @@
         </div>
         {% if current_user.is_authenticated %}
         <p class="user">
-            Logged in as {{ current_user.first_name }} {{ current_user.last_name }} - 
+            Logged in as {{ current_user.first_name }} {{ current_user.last_name }}
+            {% if current_user.is_admin %}
+                (<a href="{{ url_for('attendance.admin' )}}">Admin</a>)
+            {% endif %} - 
             <a href="{{ url_for('auth.logout') }}">Log out</a>
         </p>
         {% endif %}
