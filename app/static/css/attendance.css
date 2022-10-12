@@ -82,6 +82,11 @@ input[type="time"] {
     font-size: 150px;
 }
 
+.display-code-small {
+    font-size: 100px;
+    padding-right: 100px;
+}
+
 .qr-code {
     padding: 10px;
     background-color: white;

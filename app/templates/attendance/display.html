@@ -10,7 +10,7 @@
         Enter the attendance code at <br><a href="{{ url_for('attendance.attendance_redirect') }}">{{ url_for('attendance.attendance_redirect', _external=True) }}</a>
     </p>
     <div class="display-attendance">
-        <p class="display-code">{{ attendance.code }}</p>
+        <p class="display-code {% if attendance.code|length > 6 %}display-code-small{% endif %}">{{ attendance.code }}</p>
         <div class="qr-code">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ url_for('attendance.attendance', code=attendance.code, _external=True) }}">
         </div>
